@@ -5,7 +5,9 @@ var marker = preload("res://addons/path_creator/Position2DMarker.tscn")
 var last_selection: PathCreator2D
 
 func _enter_tree():
-	add_custom_type("PathCreator2D", "PathCreator2D", preload("res://addons/path_creator/PathCreator.gd"), preload("res://addons/path_creator/icons/PathCreator.png"))
+	add_custom_type("PathCreator2D", "Node2D", \
+		preload("res://addons/path_creator/PathCreator.gd"), \
+		preload("res://addons/path_creator/icons/PathCreator.png"))
 	
 func get_nearest_child_within(node: Node2D, pos: Vector2, dist: float) -> Node:
 	var o: Node
@@ -21,17 +23,18 @@ func get_nearest_child_within(node: Node2D, pos: Vector2, dist: float) -> Node:
 	return o
 	
 func clear_markers(selected: PathCreator2D):
-	selected.editor_line.visible = false
 	for c in selected.get_children():
 		if c is Position2DMarker: c.queue_free()
 	
 func make_visible(visible: bool):
 	if not visible and last_selection: 
+		last_selection.editor_line.visible = false
 		clear_markers(last_selection)
 		return
 	var selected = (get_editor_interface().get_selection().get_selected_nodes()[0] as PathCreator2D)
 	last_selection = selected
 	selected.editor_line.visible = true
+	clear_markers(selected)
 	for c in (selected as PathCreator2D).get_path_points():
 		var p = marker.instance()
 		p.global_position = c
