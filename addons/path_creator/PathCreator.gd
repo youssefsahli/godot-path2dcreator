@@ -10,6 +10,9 @@ func _ready():
 	editor_line.width = 2
 	add_child(editor_line)
 
+func _process(_delta):
+	rotation = -get_parent().rotation
+
 func update_line():
 	editor_line.points = path_points
 

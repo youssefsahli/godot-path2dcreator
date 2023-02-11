@@ -3,7 +3,9 @@
 [ext_resource path="res://addons/path_creator/PathCreator.gd" type="Script" id=1]
 
 [node name="Test" type="Node2D"]
+rotation = -3.71581
 
 [node name="PathCreator2D" type="Node2D" parent="."]
+rotation = 3.71581
 script = ExtResource( 1 )
-path_points = [ Vector2( 0, 0 ), Vector2( 190.105, 94.5028 ), Vector2( 240.052, 296.668 ), Vector2( 505.245, 324.02 ) ]
+path_points = [ Vector2( 0, 0 ), Vector2( 215.079, 109.962 ), Vector2( 312.594, 335.912 ), Vector2( 630.112, 216.991 ) ]
