@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PathCreator2D",
 "language": "GDScript",
-"path": "res://PathCreator.gd"
+"path": "res://addons/path_creator/PathCreator.gd"
 }, {
 "base": "Node2D",
 "class": "Position2DMarker",
