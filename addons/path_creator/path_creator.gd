@@ -5,7 +5,7 @@ var marker = preload("res://addons/path_creator/Position2DMarker.tscn")
 var last_selection: PathCreator2D
 
 func _enter_tree():
-	add_custom_type("PathCreator2D", "Node2D", preload("res://PathCreator.gd"), preload("res://addons/path_creator/icons/PathCreator.png"))
+	add_custom_type("PathCreator2D", "PathCreator2D", preload("res://addons/path_creator/PathCreator.gd"), preload("res://addons/path_creator/icons/PathCreator.png"))
 	
 func get_nearest_child_within(node: Node2D, pos: Vector2, dist: float) -> Node:
 	var o: Node
