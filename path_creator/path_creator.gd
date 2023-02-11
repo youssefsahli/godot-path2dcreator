@@ -2,6 +2,7 @@ tool
 extends EditorPlugin
 
 var marker = preload("res://addons/path_creator/Position2DMarker.tscn")
+var last_selection: PathCreator2D
 
 func _enter_tree():
 	add_custom_type("PathCreator2D", "Node2D", preload("res://PathCreator.gd"), preload("res://addons/path_creator/icons/PathCreator.png"))
@@ -18,6 +19,26 @@ func get_nearest_child_within(node: Node2D, pos: Vector2, dist: float) -> Node:
 		k.sort()
 		o = D[k[0]]
 	return o
+	
+func clear_markers(selected: PathCreator2D):
+	selected.editor_line.visible = false
+	for c in selected.get_children():
+		if c is Position2DMarker: c.queue_free()
+	
+func make_visible(visible: bool):
+	if not visible and last_selection: 
+		clear_markers(last_selection)
+		return
+	var selected = (get_editor_interface().get_selection().get_selected_nodes()[0] as PathCreator2D)
+	last_selection = selected
+	selected.editor_line.visible = true
+	for c in (selected as PathCreator2D).get_path_points():
+		var p = marker.instance()
+		p.global_position = c
+		selected.add_child(p)
+	
+	selected.update_line()
+		
 
 func forward_canvas_gui_input(ev: InputEvent) -> bool:
 	var consume = false
@@ -32,11 +53,16 @@ func forward_canvas_gui_input(ev: InputEvent) -> bool:
 			BUTTON_LEFT:
 				var p = marker.instance()
 				p.global_position = mpos
+				selected.add_point(p)
 				selected.add_child(p)
+				get_editor_interface().inspect_object(selected)
 				consume = true
 			BUTTON_RIGHT:
 				var pos2dnode = get_nearest_child_within(selected, mpos, 50)
-				if pos2dnode is Position2DMarker: pos2dnode.queue_free()
+				if pos2dnode is Position2DMarker: 
+					pos2dnode.queue_free()
+					selected.remove_point(pos2dnode)
+					get_editor_interface().inspect_object(selected)
 				consume = true
 			BUTTON_MIDDLE: 
 				consume = false
