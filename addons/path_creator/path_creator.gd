@@ -2,7 +2,7 @@ tool
 extends EditorPlugin
 
 var marker = preload("res://addons/path_creator/Position2DMarker.tscn")
-var last_selection: PathCreator2D
+var last_selection
 
 func _enter_tree():
 	add_custom_type("PathCreator2D", "Node2D", \
@@ -22,7 +22,7 @@ func get_nearest_child_within(node: Node2D, pos: Vector2, dist: float) -> Node:
 		o = D[k[0]]
 	return o
 	
-func clear_markers(selected: PathCreator2D):
+func clear_markers(selected):
 	for c in selected.get_children():
 		if c is Position2DMarker: c.queue_free()
 	
@@ -31,7 +31,7 @@ func make_visible(visible: bool):
 		last_selection.editor_line.visible = false
 		clear_markers(last_selection)
 		return
-	var selected = (get_editor_interface().get_selection().get_selected_nodes()[0] as PathCreator2D)
+	var selected = get_editor_interface().get_selection().get_selected_nodes()[0]
 	last_selection = selected
 	selected.editor_line.visible = true
 	clear_markers(selected)
@@ -72,7 +72,7 @@ func forward_canvas_gui_input(ev: InputEvent) -> bool:
 	return consume
 	
 func handles(object) -> bool:
-	return object is PathCreator2D
+	return object.get("type") == "PathCreator2D"
 
 func _exit_tree():
 	# Clean-up of the plugin goes here.

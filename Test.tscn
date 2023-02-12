@@ -9,3 +9,8 @@ rotation = -3.71581
 rotation = 3.71581
 script = ExtResource( 1 )
 path_points = [ Vector2( 0, 0 ), Vector2( 215.079, 109.962 ), Vector2( 312.594, 335.912 ), Vector2( 630.112, 216.991 ) ]
+
+[node name="PathCreator2D2" type="Node2D" parent="."]
+rotation = 3.71581
+script = ExtResource( 1 )
+path_points = [ Vector2( 0, 0 ), Vector2( 215.079, 99.2596 ), Vector2( 351.837, 233.64 ), Vector2( 206.754, 403.697 ) ]

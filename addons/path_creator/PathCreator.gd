@@ -5,6 +5,7 @@ class_name PathCreator2D
 
 export (Array) var path_points = [Vector2.ZERO]
 var editor_line : = Line2D.new()
+var type = "PathCreator2D"
 
 func _ready():
 	editor_line.width = 2
